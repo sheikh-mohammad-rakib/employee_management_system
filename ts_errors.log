@@ -1,0 +1,12 @@
+app/(dashboard)/admin/attendance/page.tsx(53,30): error TS7006: Parameter 'r' implicitly has an 'any' type.
+app/(dashboard)/admin/employees/page.tsx(45,32): error TS7006: Parameter 'emp' implicitly has an 'any' type.
+app/(dashboard)/admin/page.tsx(76,33): error TS7006: Parameter 'l' implicitly has an 'any' type.
+app/api/auth/login/route.ts(19,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ email: string; password: string; }>'.
+app/api/auth/register/route.ts(20,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ name: string; email: string; password: string; role: "ADMIN" | "HR" | "EMPLOYEE"; }>'.
+app/api/leaves/[id]/route.ts(30,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ status: "APPROVED" | "DECLINED"; }>'.
+app/api/leaves/route.ts(47,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ startDate: string; endDate: string; reason: string; }>'.
+app/api/password/reset/route.ts(20,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ email: string; otp: string; newPassword: string; }>'.
+app/api/password/send-otp/route.ts(18,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ email: string; }>'.
+app/api/tasks/[id]/route.ts(42,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title?: string | undefined; description?: string | undefined; dueDate?: string | undefined; status?: "TODO" | "IN_PROGRESS" | "DONE" | undefined; assigneeId?: string | undefined; }>'.
+app/api/tasks/route.ts(58,47): error TS2339: Property 'errors' does not exist on type 'ZodError<{ title: string; dueDate: string; description?: string | undefined; assigneeId?: string | undefined; status?: "TODO" | "IN_PROGRESS" | "DONE" | undefined; }>'.
+lib/prisma.ts(1,30): error TS2307: Cannot find module '@/app/generated/prisma' or its corresponding type declarations.
