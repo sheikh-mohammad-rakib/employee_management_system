@@ -14,7 +14,10 @@ export async function GET() {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const leaves = await prisma.leave.findMany({
@@ -27,7 +30,10 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: leaves }, { status: 200 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }
 
@@ -36,7 +42,10 @@ export async function POST(request: Request) {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const body = await request.json()
@@ -63,6 +72,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, data: leave }, { status: 201 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }

@@ -14,10 +14,18 @@ interface Attendance {
 }
 
 function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+  return new Date(iso).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })
 }
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString([], { weekday: "short", year: "numeric", month: "short", day: "numeric" })
+  return new Date(iso).toLocaleDateString([], {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
 }
 function calcDuration(checkIn: string, checkOut: string | null) {
   if (!checkOut) return "—"
@@ -39,7 +47,9 @@ export default function AttendancePage() {
     setLoading(false)
   }, [])
 
-  useEffect(() => { fetchRecords() }, [fetchRecords])
+  useEffect(() => {
+    fetchRecords()
+  }, [fetchRecords])
 
   const hasOpenCheckIn = records.some((r) => !r.checkOut)
 
@@ -48,8 +58,15 @@ export default function AttendancePage() {
     try {
       const res = await fetch(`/api/attendance/${action}`, { method: "POST" })
       const data = await res.json()
-      if (!res.ok) { toast.error(data.error); return }
-      toast.success(action === "checkin" ? "Checked in successfully!" : "Checked out successfully!")
+      if (!res.ok) {
+        toast.error(data.error)
+        return
+      }
+      toast.success(
+        action === "checkin"
+          ? "Checked in successfully!"
+          : "Checked out successfully!"
+      )
       await fetchRecords()
     } catch {
       toast.error("Something went wrong")
@@ -64,32 +81,46 @@ export default function AttendancePage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Attendance</h2>
-        <p className="mt-1 text-muted-foreground">Track your daily check-in and check-out.</p>
+        <p className="mt-1 text-muted-foreground">
+          Track your daily check-in and check-out.
+        </p>
       </div>
 
       {/* Action Card */}
       <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <div className="flex items-center gap-3">
-            <div className={`flex size-10 items-center justify-center rounded-full ${hasOpenCheckIn ? "bg-success/15" : "bg-muted"}`}>
-              <Clock className={`size-5 ${hasOpenCheckIn ? "text-success" : "text-muted-foreground"}`} />
+            <div
+              className={`flex size-10 items-center justify-center rounded-full ${hasOpenCheckIn ? "bg-success/15" : "bg-muted"}`}
+            >
+              <Clock
+                className={`size-5 ${hasOpenCheckIn ? "text-success" : "text-muted-foreground"}`}
+              />
             </div>
             <div>
               <p className="font-medium">
-                {hasOpenCheckIn ? "You are checked in" : "You are not checked in"}
+                {hasOpenCheckIn
+                  ? "You are checked in"
+                  : "You are not checked in"}
               </p>
               <p className="text-sm text-muted-foreground">
-                {new Date().toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" })}
+                {new Date().toLocaleDateString([], {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                })}
               </p>
             </div>
           </div>
           <button
             id={hasOpenCheckIn ? "checkout-btn" : "checkin-btn"}
-            onClick={() => handleAction(hasOpenCheckIn ? "checkout" : "checkin")}
+            onClick={() =>
+              handleAction(hasOpenCheckIn ? "checkout" : "checkin")
+            }
             disabled={actionLoading}
             className={`flex items-center gap-2 rounded-lg px-6 py-2.5 text-sm font-semibold shadow-sm transition disabled:opacity-50 ${
               hasOpenCheckIn
-                ? "bg-destructive text-destructive-foreground hover:opacity-90"
+                ? "text-destructive-foreground bg-destructive hover:opacity-90"
                 : "bg-primary text-primary-foreground hover:opacity-90"
             }`}
           >
@@ -114,29 +145,53 @@ export default function AttendancePage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40">
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Date</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Check In</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Check Out</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Duration</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Status</th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Check In
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Check Out
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Duration
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody>
               {records.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">
+                  <td
+                    colSpan={5}
+                    className="px-6 py-8 text-center text-muted-foreground"
+                  >
                     No attendance records yet.
                   </td>
                 </tr>
               ) : (
                 records.map((r) => (
-                  <tr key={r.id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{formatDate(r.date)}</td>
+                  <tr
+                    key={r.id}
+                    className="border-b border-border transition-colors last:border-0 hover:bg-muted/30"
+                  >
+                    <td className="px-6 py-4 font-medium">
+                      {formatDate(r.date)}
+                    </td>
                     <td className="px-6 py-4">{formatTime(r.checkIn)}</td>
-                    <td className="px-6 py-4">{r.checkOut ? formatTime(r.checkOut) : "—"}</td>
-                    <td className="px-6 py-4">{calcDuration(r.checkIn, r.checkOut)}</td>
                     <td className="px-6 py-4">
-                      <StatusBadge status={r.checkOut ? "DONE" : "IN_PROGRESS"} />
+                      {r.checkOut ? formatTime(r.checkOut) : "—"}
+                    </td>
+                    <td className="px-6 py-4">
+                      {calcDuration(r.checkIn, r.checkOut)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <StatusBadge
+                        status={r.checkOut ? "DONE" : "IN_PROGRESS"}
+                      />
                     </td>
                   </tr>
                 ))

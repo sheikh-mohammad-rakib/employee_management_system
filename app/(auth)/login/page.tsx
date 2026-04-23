@@ -41,7 +41,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <Toaster position="top-center" />
-      <div className="w-full max-w-md animate-fade-in">
+      <div className="animate-fade-in w-full max-w-md">
         {/* Card */}
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           {/* Logo */}
@@ -50,7 +50,9 @@ export default function LoginPage() {
               <Building2 className="size-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
+              <h1 className="text-2xl font-bold tracking-tight">
+                Welcome back
+              </h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 Sign in to your EMS account
               </p>
@@ -71,7 +73,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
-                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none disabled:opacity-50"
               />
             </div>
 
@@ -89,15 +91,19 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 pr-10 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 pr-10 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none disabled:opacity-50"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
+                  className="absolute top-2.5 right-3 text-muted-foreground hover:text-foreground"
                   aria-label="Toggle password visibility"
                 >
-                  {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPass ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -119,7 +125,10 @@ export default function LoginPage() {
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="font-medium text-primary underline-offset-4 hover:underline">
+            <Link
+              href="/register"
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
               Register
             </Link>
           </div>

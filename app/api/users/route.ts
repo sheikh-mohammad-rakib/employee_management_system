@@ -7,10 +7,16 @@ export async function GET() {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
     if (auth.role === "EMPLOYEE") {
-      return NextResponse.json({ success: false, error: "Forbidden" }, { status: 403 })
+      return NextResponse.json(
+        { success: false, error: "Forbidden" },
+        { status: 403 }
+      )
     }
 
     const users = await prisma.user.findMany({
@@ -26,6 +32,9 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: users }, { status: 200 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }

@@ -31,10 +31,22 @@ export default async function EmployeeDashboard() {
   const stats = [
     {
       label: "Today's Status",
-      value: isCheckedIn ? "Checked In" : isCheckedOut ? "Checked Out" : "Not Checked In",
+      value: isCheckedIn
+        ? "Checked In"
+        : isCheckedOut
+          ? "Checked Out"
+          : "Not Checked In",
       icon: Clock,
-      color: isCheckedIn ? "text-success" : isCheckedOut ? "text-muted-foreground" : "text-destructive",
-      bg: isCheckedIn ? "bg-success/10" : isCheckedOut ? "bg-muted" : "bg-destructive/10",
+      color: isCheckedIn
+        ? "text-success"
+        : isCheckedOut
+          ? "text-muted-foreground"
+          : "text-destructive",
+      bg: isCheckedIn
+        ? "bg-success/10"
+        : isCheckedOut
+          ? "bg-muted"
+          : "bg-destructive/10",
     },
     {
       label: "Active Tasks",
@@ -80,7 +92,9 @@ export default async function EmployeeDashboard() {
                 <p className="text-sm text-muted-foreground">{label}</p>
                 <p className={`mt-1 text-xl font-bold ${color}`}>{value}</p>
               </div>
-              <div className={`flex size-10 items-center justify-center rounded-lg ${bg}`}>
+              <div
+                className={`flex size-10 items-center justify-center rounded-lg ${bg}`}
+              >
                 <Icon className={`size-5 ${color}`} />
               </div>
             </div>
