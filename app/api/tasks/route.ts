@@ -16,7 +16,10 @@ export async function GET(request: Request) {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const { searchParams } = new URL(request.url)
@@ -27,7 +30,9 @@ export async function GET(request: Request) {
       where: {
         ...(auth.role === "EMPLOYEE" ? { assigneeId: auth.userId } : {}),
         ...(assigneeId && auth.role !== "EMPLOYEE" ? { assigneeId } : {}),
-        ...(status ? { status: status as "TODO" | "IN_PROGRESS" | "DONE" } : {}),
+        ...(status
+          ? { status: status as "TODO" | "IN_PROGRESS" | "DONE" }
+          : {}),
       },
       include: {
         creator: { select: { id: true, name: true, email: true, role: true } },
@@ -38,7 +43,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, data: tasks }, { status: 200 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }
 
@@ -47,7 +55,10 @@ export async function POST(request: Request) {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const body = await request.json()
@@ -81,6 +92,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, data: task }, { status: 201 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }

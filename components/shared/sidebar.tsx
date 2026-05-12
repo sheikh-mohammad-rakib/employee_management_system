@@ -23,19 +23,23 @@ interface SidebarProps {
 }
 
 const employeeLinks = [
-  { href: "/employee",             label: "Dashboard",    icon: LayoutDashboard },
-  { href: "/employee/attendance",  label: "Attendance",   icon: Clock },
-  { href: "/employee/leaves",      label: "Leaves",       icon: CalendarOff },
-  { href: "/employee/tasks",       label: "Tasks",        icon: CheckSquare },
-  { href: "/employee/change-password", label: "Change Password", icon: KeyRound },
+  { href: "/employee", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/employee/attendance", label: "Attendance", icon: Clock },
+  { href: "/employee/leaves", label: "Leaves", icon: CalendarOff },
+  { href: "/employee/tasks", label: "Tasks", icon: CheckSquare },
+  {
+    href: "/employee/change-password",
+    label: "Change Password",
+    icon: KeyRound,
+  },
 ]
 
 const adminLinks = [
-  { href: "/admin",                label: "Dashboard",    icon: LayoutDashboard },
-  { href: "/admin/employees",      label: "Employees",    icon: Users },
-  { href: "/admin/attendance",     label: "Attendance",   icon: Clock },
-  { href: "/admin/leaves",         label: "Leaves",       icon: CalendarOff },
-  { href: "/admin/tasks",          label: "Tasks",        icon: CheckSquare },
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/employees", label: "Employees", icon: Users },
+  { href: "/admin/attendance", label: "Attendance", icon: Clock },
+  { href: "/admin/leaves", label: "Leaves", icon: CalendarOff },
+  { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
 ]
 
 export function Sidebar({ role, userName }: SidebarProps) {
@@ -58,21 +62,29 @@ export function Sidebar({ role, userName }: SidebarProps) {
           <Building2 className="size-5" />
         </div>
         <div>
-          <p className="text-sm font-semibold leading-none">EMS</p>
-          <p className="text-xs text-sidebar-foreground/60 capitalize">{role.toLowerCase()}</p>
+          <p className="text-sm leading-none font-semibold">EMS</p>
+          <p className="text-xs text-sidebar-foreground/60 capitalize">
+            {role.toLowerCase()}
+          </p>
         </div>
       </div>
 
       {/* User */}
       <div className="border-b border-sidebar-border px-6 py-4">
-        <p className="text-xs text-sidebar-foreground/50 uppercase tracking-wider">Signed in as</p>
+        <p className="text-xs tracking-wider text-sidebar-foreground/50 uppercase">
+          Signed in as
+        </p>
         <p className="mt-0.5 truncate text-sm font-medium">{userName}</p>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {links.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== "/employee" && href !== "/admin" && pathname.startsWith(href))
+          const active =
+            pathname === href ||
+            (href !== "/employee" &&
+              href !== "/admin" &&
+              pathname.startsWith(href))
           return (
             <Link
               key={href}

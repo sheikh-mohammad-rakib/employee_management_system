@@ -9,7 +9,9 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export default async function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
   const auth = await getAuthUser()
   if (!auth) redirect("/login")
 
@@ -32,7 +34,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
       <Sidebar role={user.role} userName={user.name} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Navbar title={title} />
-        <main className="flex-1 overflow-y-auto p-6 animate-fade-in">
+        <main className="animate-fade-in flex-1 overflow-y-auto p-6">
           {children}
         </main>
       </div>

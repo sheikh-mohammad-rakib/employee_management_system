@@ -39,10 +39,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Role enforcement for admin routes
-    if (
-      pathname.startsWith("/admin") &&
-      payload.role === "EMPLOYEE"
-    ) {
+    if (pathname.startsWith("/admin") && payload.role === "EMPLOYEE") {
       return NextResponse.redirect(new URL("/employee", request.url))
     }
 

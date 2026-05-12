@@ -7,7 +7,10 @@ export async function GET(request: Request) {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const { searchParams } = new URL(request.url)
@@ -46,6 +49,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, data: records }, { status: 200 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }

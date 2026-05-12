@@ -28,7 +28,9 @@ export default function AdminLeavesPage() {
     setLoading(false)
   }, [])
 
-  useEffect(() => { fetchLeaves() }, [fetchLeaves])
+  useEffect(() => {
+    fetchLeaves()
+  }, [fetchLeaves])
 
   async function updateStatus(id: string, status: "APPROVED" | "DECLINED") {
     const res = await fetch(`/api/leaves/${id}`, {
@@ -37,20 +39,26 @@ export default function AdminLeavesPage() {
       body: JSON.stringify({ status }),
     })
     const data = await res.json()
-    if (!res.ok) { toast.error(data.error); return }
+    if (!res.ok) {
+      toast.error(data.error)
+      return
+    }
     toast.success(`Leave ${status.toLowerCase()}!`)
     await fetchLeaves()
   }
 
   if (loading) return <LoadingSpinner fullPage />
 
-  const filtered = filter === "ALL" ? leaves : leaves.filter((l) => l.status === filter)
+  const filtered =
+    filter === "ALL" ? leaves : leaves.filter((l) => l.status === filter)
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Leave Requests</h2>
-        <p className="mt-1 text-muted-foreground">Approve or decline employee leave requests.</p>
+        <p className="mt-1 text-muted-foreground">
+          Approve or decline employee leave requests.
+        </p>
       </div>
 
       {/* Filter Tabs */}
@@ -67,7 +75,11 @@ export default function AdminLeavesPage() {
           >
             {s === "ALL" ? "All" : s.charAt(0) + s.slice(1).toLowerCase()}
             <span className="ml-1.5 text-muted-foreground">
-              ({s === "ALL" ? leaves.length : leaves.filter((l) => l.status === s).length})
+              (
+              {s === "ALL"
+                ? leaves.length
+                : leaves.filter((l) => l.status === s).length}
+              )
             </span>
           </button>
         ))}
@@ -78,33 +90,56 @@ export default function AdminLeavesPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40">
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Employee</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Period</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Reason</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Status</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Actions</th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Employee
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Period
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Reason
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">
+                  <td
+                    colSpan={5}
+                    className="px-6 py-8 text-center text-muted-foreground"
+                  >
                     <CalendarOff className="mx-auto mb-2 size-8 opacity-30" />
                     No leave requests found.
                   </td>
                 </tr>
               ) : (
                 filtered.map((l) => (
-                  <tr key={l.id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
+                  <tr
+                    key={l.id}
+                    className="border-b border-border transition-colors last:border-0 hover:bg-muted/30"
+                  >
                     <td className="px-6 py-4">
                       <p className="font-medium">{l.user.name}</p>
-                      <p className="text-xs text-muted-foreground">{l.user.email}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {l.user.email}
+                      </p>
                     </td>
                     <td className="px-6 py-4 text-muted-foreground">
-                      {new Date(l.startDate).toLocaleDateString()} — {new Date(l.endDate).toLocaleDateString()}
+                      {new Date(l.startDate).toLocaleDateString()} —{" "}
+                      {new Date(l.endDate).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 max-w-xs truncate text-muted-foreground">{l.reason}</td>
-                    <td className="px-6 py-4"><StatusBadge status={l.status} /></td>
+                    <td className="max-w-xs truncate px-6 py-4 text-muted-foreground">
+                      {l.reason}
+                    </td>
+                    <td className="px-6 py-4">
+                      <StatusBadge status={l.status} />
+                    </td>
                     <td className="px-6 py-4">
                       {l.status === "PENDING" && (
                         <div className="flex gap-2">

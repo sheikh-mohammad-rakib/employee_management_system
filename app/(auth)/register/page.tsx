@@ -57,7 +57,7 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
       <Toaster position="top-center" />
-      <div className="w-full max-w-md animate-fade-in">
+      <div className="animate-fade-in w-full max-w-md">
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           {/* Logo */}
           <div className="mb-8 flex flex-col items-center gap-3 text-center">
@@ -65,7 +65,9 @@ export default function RegisterPage() {
               <Building2 className="size-7" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Create account</h1>
+              <h1 className="text-2xl font-bold tracking-tight">
+                Create account
+              </h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 Join your team on EMS
               </p>
@@ -75,7 +77,9 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div className="space-y-1.5">
-              <label htmlFor="name" className="text-sm font-medium">Full name</label>
+              <label htmlFor="name" className="text-sm font-medium">
+                Full name
+              </label>
               <input
                 id="name"
                 type="text"
@@ -83,13 +87,15 @@ export default function RegisterPage() {
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
                 placeholder="John Smith"
-                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
               />
             </div>
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label htmlFor="reg-email" className="text-sm font-medium">Email address</label>
+              <label htmlFor="reg-email" className="text-sm font-medium">
+                Email address
+              </label>
               <input
                 id="reg-email"
                 type="email"
@@ -97,18 +103,20 @@ export default function RegisterPage() {
                 value={form.email}
                 onChange={(e) => update("email", e.target.value)}
                 placeholder="you@company.com"
-                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
               />
             </div>
 
             {/* Role */}
             <div className="space-y-1.5">
-              <label htmlFor="role" className="text-sm font-medium">Role</label>
+              <label htmlFor="role" className="text-sm font-medium">
+                Role
+              </label>
               <select
                 id="role"
                 value={form.role}
                 onChange={(e) => update("role", e.target.value)}
-                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
               >
                 <option value="EMPLOYEE">Employee</option>
                 <option value="HR">HR</option>
@@ -118,7 +126,9 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label htmlFor="reg-password" className="text-sm font-medium">Password</label>
+              <label htmlFor="reg-password" className="text-sm font-medium">
+                Password
+              </label>
               <div className="relative">
                 <input
                   id="reg-password"
@@ -127,21 +137,27 @@ export default function RegisterPage() {
                   value={form.password}
                   onChange={(e) => update("password", e.target.value)}
                   placeholder="Min 8 characters"
-                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 pr-10 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 pr-10 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
+                  className="absolute top-2.5 right-3 text-muted-foreground hover:text-foreground"
                 >
-                  {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPass ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Confirm Password */}
             <div className="space-y-1.5">
-              <label htmlFor="confirm-password" className="text-sm font-medium">Confirm password</label>
+              <label htmlFor="confirm-password" className="text-sm font-medium">
+                Confirm password
+              </label>
               <input
                 id="confirm-password"
                 type={showPass ? "text" : "password"}
@@ -149,7 +165,7 @@ export default function RegisterPage() {
                 value={form.confirmPassword}
                 onChange={(e) => update("confirmPassword", e.target.value)}
                 placeholder="••••••••"
-                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
               />
             </div>
 
@@ -170,7 +186,10 @@ export default function RegisterPage() {
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="font-medium text-primary underline-offset-4 hover:underline">
+            <Link
+              href="/login"
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
               Sign in
             </Link>
           </div>

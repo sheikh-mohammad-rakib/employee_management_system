@@ -7,7 +7,10 @@ export async function POST() {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     // Check for open check-in today (checkOut is null)
@@ -26,7 +29,10 @@ export async function POST() {
 
     if (existing) {
       return NextResponse.json(
-        { success: false, error: "Already checked in. Please check out first." },
+        {
+          success: false,
+          error: "Already checked in. Please check out first.",
+        },
         { status: 409 }
       )
     }
@@ -41,6 +47,9 @@ export async function POST() {
 
     return NextResponse.json({ success: true, data: record }, { status: 201 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }

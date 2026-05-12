@@ -30,7 +30,9 @@ export default function LeavesPage() {
     setLoading(false)
   }, [])
 
-  useEffect(() => { fetchLeaves() }, [fetchLeaves])
+  useEffect(() => {
+    fetchLeaves()
+  }, [fetchLeaves])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -42,7 +44,10 @@ export default function LeavesPage() {
         body: JSON.stringify(form),
       })
       const data = await res.json()
-      if (!res.ok) { toast.error(data.error); return }
+      if (!res.ok) {
+        toast.error(data.error)
+        return
+      }
       toast.success("Leave request submitted!")
       setForm({ startDate: "", endDate: "", reason: "" })
       setShowForm(false)
@@ -58,7 +63,10 @@ export default function LeavesPage() {
     if (!confirm("Cancel this leave request?")) return
     const res = await fetch(`/api/leaves/${id}`, { method: "DELETE" })
     const data = await res.json()
-    if (!res.ok) { toast.error(data.error); return }
+    if (!res.ok) {
+      toast.error(data.error)
+      return
+    }
     toast.success("Leave request cancelled")
     await fetchLeaves()
   }
@@ -70,7 +78,9 @@ export default function LeavesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Leave Requests</h2>
-          <p className="mt-1 text-muted-foreground">Manage your time-off requests.</p>
+          <p className="mt-1 text-muted-foreground">
+            Manage your time-off requests.
+          </p>
         </div>
         <button
           id="new-leave-btn"
@@ -89,38 +99,50 @@ export default function LeavesPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label htmlFor="startDate" className="text-sm font-medium">Start Date</label>
+                <label htmlFor="startDate" className="text-sm font-medium">
+                  Start Date
+                </label>
                 <input
                   id="startDate"
                   type="date"
                   required
                   value={form.startDate}
-                  onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
-                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, startDate: e.target.value }))
+                  }
+                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                 />
               </div>
               <div className="space-y-1.5">
-                <label htmlFor="endDate" className="text-sm font-medium">End Date</label>
+                <label htmlFor="endDate" className="text-sm font-medium">
+                  End Date
+                </label>
                 <input
                   id="endDate"
                   type="date"
                   required
                   value={form.endDate}
-                  onChange={(e) => setForm((f) => ({ ...f, endDate: e.target.value }))}
-                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, endDate: e.target.value }))
+                  }
+                  className="flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:ring-2 focus:ring-ring focus:outline-none"
                 />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label htmlFor="reason" className="text-sm font-medium">Reason</label>
+              <label htmlFor="reason" className="text-sm font-medium">
+                Reason
+              </label>
               <textarea
                 id="reason"
                 required
                 rows={3}
                 value={form.reason}
-                onChange={(e) => setForm((f) => ({ ...f, reason: e.target.value }))}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, reason: e.target.value }))
+                }
                 placeholder="Please explain the reason for your leave..."
-                className="flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
               />
             </div>
             <div className="flex gap-3">
@@ -129,7 +151,9 @@ export default function LeavesPage() {
                 disabled={submitting}
                 className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
               >
-                {submitting && <span className="size-3.5 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />}
+                {submitting && (
+                  <span className="size-3.5 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                )}
                 Submit Request
               </button>
               <button
@@ -153,28 +177,47 @@ export default function LeavesPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40">
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Period</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Reason</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Status</th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground">Actions</th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Period
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Reason
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left font-medium text-muted-foreground">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {leaves.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-muted-foreground">
+                  <td
+                    colSpan={4}
+                    className="px-6 py-8 text-center text-muted-foreground"
+                  >
                     <CalendarOff className="mx-auto mb-2 size-8 opacity-30" />
                     No leave requests yet.
                   </td>
                 </tr>
               ) : (
                 leaves.map((l) => (
-                  <tr key={l.id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
+                  <tr
+                    key={l.id}
+                    className="border-b border-border transition-colors last:border-0 hover:bg-muted/30"
+                  >
                     <td className="px-6 py-4 font-medium">
-                      {new Date(l.startDate).toLocaleDateString()} — {new Date(l.endDate).toLocaleDateString()}
+                      {new Date(l.startDate).toLocaleDateString()} —{" "}
+                      {new Date(l.endDate).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 max-w-xs truncate text-muted-foreground">{l.reason}</td>
-                    <td className="px-6 py-4"><StatusBadge status={l.status} /></td>
+                    <td className="max-w-xs truncate px-6 py-4 text-muted-foreground">
+                      {l.reason}
+                    </td>
+                    <td className="px-6 py-4">
+                      <StatusBadge status={l.status} />
+                    </td>
                     <td className="px-6 py-4">
                       {l.status === "PENDING" && (
                         <button

@@ -7,7 +7,10 @@ export async function POST() {
   try {
     const auth = await getAuthUser()
     if (!auth) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      )
     }
 
     const openRecord = await prisma.attendance.findFirst({
@@ -29,6 +32,9 @@ export async function POST() {
 
     return NextResponse.json({ success: true, data: updated }, { status: 200 })
   } catch {
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    )
   }
 }
