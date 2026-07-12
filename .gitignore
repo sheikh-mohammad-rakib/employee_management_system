@@ -38,3 +38,9 @@ pnpm-debug.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+.env
+front-end.md 
+test-github-ai.mjs
+tutorial.md
+tutorial_dev.md
