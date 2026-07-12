@@ -6,6 +6,7 @@ import { Check, X, CalendarOff } from "lucide-react"
 import { StatusBadge } from "@/components/shared/status-badge"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import type { LeaveStatus } from "@/types"
+import { AILeaveRiskModal } from "@/components/shared/ai-leave-risk-modal"
 
 interface Leave {
   id: string
@@ -13,7 +14,7 @@ interface Leave {
   endDate: string
   reason: string
   status: LeaveStatus
-  user: { name: string; email: string }
+  user: { id: string; name: string; email: string }
 }
 
 export default function AdminLeavesPage() {
@@ -142,7 +143,11 @@ export default function AdminLeavesPage() {
                     </td>
                     <td className="px-6 py-4">
                       {l.status === "PENDING" && (
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <AILeaveRiskModal
+                            leave={l}
+                            onUpdateStatus={updateStatus}
+                          />
                           <button
                             onClick={() => updateStatus(l.id, "APPROVED")}
                             className="flex items-center gap-1 rounded-md border border-success/30 bg-success/10 px-3 py-1.5 text-xs font-medium text-success transition hover:bg-success/20"
