@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Clock, CalendarOff, CheckSquare, TrendingUp } from "lucide-react"
+import { AIWeeklyReport } from "@/components/shared/ai-weekly-report"
 
 export default async function EmployeeDashboard() {
   const auth = await getAuthUser()
@@ -101,6 +102,9 @@ export default async function EmployeeDashboard() {
           </div>
         ))}
       </div>
+
+      {/* AI Weekly Standup Report */}
+      <AIWeeklyReport />
 
       {/* Quick Actions */}
       <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
