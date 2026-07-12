@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/shared/sidebar"
 import { Navbar } from "@/components/shared/navbar"
 import { prisma } from "@/lib/prisma"
 import { Toaster } from "react-hot-toast"
+import { AICopilot } from "@/components/shared/ai-copilot"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -39,6 +40,7 @@ export default async function DashboardLayout({
         </main>
       </div>
       <Toaster position="top-right" />
+      <AICopilot />
     </div>
   )
 }
