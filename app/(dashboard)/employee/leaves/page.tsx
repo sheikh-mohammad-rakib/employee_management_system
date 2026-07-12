@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react"
 import toast from "react-hot-toast"
-import { Plus, Trash2, CalendarOff } from "lucide-react"
+import { Plus, Trash2, CalendarOff, Sparkles } from "lucide-react"
 import { StatusBadge } from "@/components/shared/status-badge"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import type { LeaveStatus } from "@/types"
@@ -22,6 +22,33 @@ export default function LeavesPage() {
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState({ startDate: "", endDate: "", reason: "" })
   const [submitting, setSubmitting] = useState(false)
+  const [polishingAI, setPolishingAI] = useState(false)
+
+  async function handlePolishReason() {
+    if (!form.reason.trim()) {
+      toast.error("Please enter a draft reason first")
+      return
+    }
+    setPolishingAI(true)
+    try {
+      const res = await fetch("/api/ai/polish-leave", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reason: form.reason }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        toast.error(data.error || "AI polishing failed")
+        return
+      }
+      setForm((f) => ({ ...f, reason: data.polished }))
+      toast.success("✨ AI polished your leave request!")
+    } catch {
+      toast.error("Failed to connect to AI service")
+    } finally {
+      setPolishingAI(false)
+    }
+  }
 
   const fetchLeaves = useCallback(async () => {
     const res = await fetch("/api/leaves")
@@ -130,13 +157,24 @@ export default function LeavesPage() {
               </div>
             </div>
             <div className="space-y-1.5">
-              <label htmlFor="reason" className="text-sm font-medium">
-                Reason
-              </label>
+              <div className="flex items-center justify-between">
+                <label htmlFor="reason" className="text-sm font-medium">
+                  Reason
+                </label>
+                <button
+                  type="button"
+                  onClick={handlePolishReason}
+                  disabled={polishingAI || !form.reason.trim()}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-semibold text-primary transition hover:bg-primary/10 disabled:opacity-40"
+                >
+                  <Sparkles className="size-3.5" />
+                  {polishingAI ? "Polishing..." : "Polish with AI"}
+                </button>
+              </div>
               <textarea
                 id="reason"
                 required
-                rows={3}
+                rows={4}
                 value={form.reason}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, reason: e.target.value }))
