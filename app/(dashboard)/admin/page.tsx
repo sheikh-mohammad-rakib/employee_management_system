@@ -8,6 +8,7 @@ import {
   CheckSquare,
   TrendingUp,
 } from "lucide-react"
+import { AIExecutiveDigest } from "@/components/shared/ai-executive-digest"
 
 export default async function AdminDashboard() {
   const auth = await getAuthUser()
@@ -102,6 +103,9 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      {/* AI Executive Team Briefing */}
+      <AIExecutiveDigest />
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Pending Leave Requests */}
