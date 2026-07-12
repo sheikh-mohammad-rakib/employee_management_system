@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react"
 import toast from "react-hot-toast"
-import { Plus, CheckSquare } from "lucide-react"
+import { Plus, CheckSquare, Sparkles } from "lucide-react"
 import { StatusBadge } from "@/components/shared/status-badge"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import type { TaskStatus } from "@/types"
@@ -21,6 +21,35 @@ export default function EmployeeTasksPage() {
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState({ title: "", description: "", dueDate: "" })
   const [submitting, setSubmitting] = useState(false)
+  const [generatingAI, setGeneratingAI] = useState(false)
+
+  async function handleGenerateAIDescription() {
+    if (!form.title.trim()) {
+      toast.error("Please enter a task title first")
+      return
+    }
+    setGeneratingAI(true)
+    try {
+      const res = await fetch("/api/ai/generate-task", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: form.title,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        toast.error(data.error || "AI generation failed")
+        return
+      }
+      setForm((f) => ({ ...f, description: data.description }))
+      toast.success("✨ AI generated task description!")
+    } catch {
+      toast.error("Failed to connect to AI service")
+    } finally {
+      setGeneratingAI(false)
+    }
+  }
 
   const fetchTasks = useCallback(async () => {
     const res = await fetch("/api/tasks")
@@ -123,12 +152,23 @@ export default function EmployeeTasksPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <label htmlFor="task-desc" className="text-sm font-medium">
-                Description (optional)
-              </label>
+              <div className="flex items-center justify-between">
+                <label htmlFor="task-desc" className="text-sm font-medium">
+                  Description (optional)
+                </label>
+                <button
+                  type="button"
+                  onClick={handleGenerateAIDescription}
+                  disabled={generatingAI || !form.title.trim()}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-semibold text-primary transition hover:bg-primary/10 disabled:opacity-40"
+                >
+                  <Sparkles className="size-3.5" />
+                  {generatingAI ? "Generating..." : "Generate with AI"}
+                </button>
+              </div>
               <textarea
                 id="task-desc"
-                rows={2}
+                rows={4}
                 value={form.description}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, description: e.target.value }))
