@@ -10,19 +10,22 @@ export interface GitHubAIOptions {
 }
 
 /**
- * Calls the GitHub AI Models inference endpoint synchronously using GITHUB_TOKEN.
+ * Calls the AI inference endpoint synchronously using AI_API_KEY.
  */
 export async function callGitHubAI(
   messages: ChatMessage[],
   options: GitHubAIOptions = {}
 ): Promise<string> {
-  const token = process.env.GITHUB_TOKEN;
+  const token = process.env.AI_API_KEY;
   if (!token) {
-    throw new Error("GITHUB_TOKEN is not configured in environment variables.");
+    throw new Error("AI_API_KEY is not configured in environment variables.");
   }
 
-  const endpoint = "https://models.github.ai/inference/chat/completions";
-  const model = options.model || "openai/gpt-4.1-mini";
+  const endpoint = process.env.AI_BASE_URL;
+  if (!endpoint) {
+    throw new Error("AI_BASE_URL is not configured in environment variables.");
+  }
+  const model = options.model || process.env.AI_MODEL;
 
   const response = await fetch(endpoint, {
     method: "POST",
@@ -40,7 +43,7 @@ export async function callGitHubAI(
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`GitHub AI Inference error (${response.status}): ${errorText}`);
+    throw new Error(`AI Inference error (${response.status}): ${errorText}`);
   }
 
   const data = await response.json();

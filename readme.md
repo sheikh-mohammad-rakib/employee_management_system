@@ -1,10 +1,18 @@
 # 🏢 Employee Management System
 
-A full-stack **Employee Management System** built with **Next.js 16**, **Prisma 7**, **PostgreSQL (NeonDB)**, and **Tailwind CSS v4**. This application provides a complete suite of tools for managing employees, tracking attendance, handling leave requests, and assigning tasks — all with role-based access control.
+A full-stack **Employee Management System** built with **Next.js 16**, **Prisma 7**, **PostgreSQL (NeonDB)**, **Tailwind CSS v4**, and **Custom LLMs**. This application provides a complete suite of tools for managing employees, tracking attendance, handling leave requests, and assigning tasks — all enhanced by AI capabilities and protected by role-based access control.
 
 ---
 
 ## 🌟 Features
+
+### ✨ AI-Powered Features
+- **AI Copilot:** A floating chat assistant available across the dashboard for instant help.
+- **AI Task Generation:** Automatically generate detailed task descriptions from a short title.
+- **AI Leave Request Polisher:** Enhances and professionalizes employee leave reasons before submission.
+- **AI Leave Risk Assessment:** Analyzes leave patterns to alert HR/Admin of potential scheduling conflicts.
+- **AI Weekly Standup Report:** Generates a weekly summary of tasks and attendance for employees.
+- **AI Executive Team Digest:** Summarizes team activities and overall progress for Admins.
 
 ### 🔐 Authentication & Security
 - **JWT-based authentication** with secure HTTP-only cookies
@@ -49,6 +57,7 @@ Three distinct roles with tailored dashboards:
 | **Language** | TypeScript 5 |
 | **Database** | PostgreSQL via [Neon](https://neon.tech/) (Serverless) |
 | **ORM** | [Prisma 7](https://www.prisma.io/) with `@prisma/adapter-pg` |
+| **AI Inference**| Custom LLM via `openai` library (Custom Base URL) |
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) + `tw-animate-css` |
 | **UI Components** | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) |
 | **Auth** | [jose](https://github.com/panva/jose) (JWT) + bcryptjs |
@@ -79,6 +88,7 @@ employee-management-system/
 │   │       ├── leaves/          # Apply for leave
 │   │       └── tasks/           # View assigned tasks
 │   └── api/                     # REST API routes
+│       ├── ai/                  # Custom LLM integration routes
 │       ├── auth/                # Login, register, logout
 │       ├── attendance/          # Attendance endpoints
 │       ├── leaves/              # Leave request endpoints
@@ -86,10 +96,11 @@ employee-management-system/
 │       ├── tasks/               # Task endpoints
 │       └── users/               # User management endpoints
 ├── components/
-│   ├── shared/                  # Shared layout components
+│   ├── shared/                  # Shared layout components (AI tools, Copilot)
 │   └── ui/                      # shadcn/ui components
 ├── lib/
 │   ├── auth.ts                  # Auth helpers & session utils
+│   ├── github-ai.ts             # Custom LLM inference wrapper
 │   ├── jwt.ts                   # JWT sign/verify helpers
 │   ├── otp.ts                   # OTP generation utilities
 │   ├── prisma.ts                # Prisma client singleton
@@ -122,6 +133,7 @@ Built with Prisma and PostgreSQL (Neon), the schema includes:
 - [Node.js](https://nodejs.org/) v18+
 - A [Neon](https://neon.tech/) PostgreSQL database (free tier works)
 - An SMTP email account (e.g., Gmail) for OTP emails
+- An API Key and Base URL for Custom LLM Inference (using the `openai` library)
 
 ### 1. Clone the repository
 
@@ -152,6 +164,10 @@ EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT=587
 EMAIL_USER="your-email@gmail.com"
 EMAIL_PASS="your-app-password"
+
+# AI Inference (OpenAI-compatible Custom LLM)
+AI_API_KEY="your_custom_llm_api_key_here"
+AI_BASE_URL="https://api.your-custom-llm.com/v1"
 ```
 
 ### 4. Run database migrations
@@ -196,7 +212,7 @@ This project is optimized for deployment on **[Vercel](https://vercel.com/)**:
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/employee-management-system/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/sheikh-mohammad-rakib/employee-management-system/issues).
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -220,4 +236,4 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ---
 
-<p align="center">Built with ❤️ using Next.js, Prisma & Neon</p>
+<p align="center">Built with ❤️ using Next.js, Prisma, Neon & Custom LLMs</p>
